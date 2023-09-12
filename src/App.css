@@ -1,5 +1,16 @@
 .App {
   text-align: center;
+  
+}
+.header{
+  display: flex;
+  justify-content:space-around;
+  align-items:center;
+  margin-top: 10px;
+}
+.body{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }
 
 .App-logo {

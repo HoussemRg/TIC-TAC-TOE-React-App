@@ -1,22 +1,18 @@
 import React from 'react';
 import './App.css';
+import GameBody from './Components/gameBody/gameBody';
+import Header from "./Components/header/header";
+
 
 function App() {
   return (
     <div className="App">
-      <div className='header'>
-        <div className="icon"></div>
-        <div className="turn"></div>
-        <div className="reset"></div>
-      </div>
+      <Header />
+      <GameBody />
+      
+      
     </div>
   );
 }
 export default App;
-/*<span className="material-symbols-outlined">
-close
-</span>
-<span className="material-symbols-outlined">
-trip_origin
-</span>*/ 
 
