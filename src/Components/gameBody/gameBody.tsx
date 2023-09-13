@@ -1,20 +1,28 @@
-import React from 'react';
 import './gameBody.css';
+import { IUserTurn } from '../../App';
+
+interface IPlayTurn{
+    turn:IUserTurn
+    playTurn:()=>void
+}
 
 
-function GameBody() {
+
+
+function GameBody(props:IPlayTurn) {
+    
   return (
     <div className="gameBody">
         <div className="grid">
-        <button className="box"></button>
-        <button className="box"></button>
-        <button className="box"></button>
-        <button className="box"></button>
-        <button className="box"></button>
-        <button className="box"></button>
-        <button className="box"></button>
-        <button className="box"></button>
-        <button className="box"></button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
+        <button className="box" onClick={props.playTurn}>{ props.turn.xTurn && <span className="material-symbols-outlined xBodySymbole">close</span>}{ props.turn.oTurn && <span className="material-symbols-outlined oBodySymbole">trip_origin</span>}</button>
         <button className="x">
             <div>
                 <div>X</div>

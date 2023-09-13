@@ -72,6 +72,16 @@
     background-color: green;
     color:black;   
 }
+.xBodySymbole{
+    color:rgb(31, 201, 201);
+    font-size: 100px;
+    font-weight: bold;
+}
+.oBodySymbole{
+    color:rgb(170, 170, 9);
+    font-size: 100px;
+    font-weight: bold;
+}
 @media screen and (max-width:152px){
     .box{
         background-color: #141c24;
