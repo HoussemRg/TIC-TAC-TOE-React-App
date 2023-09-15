@@ -5,6 +5,7 @@ interface IPlayTurn{
     turn:IUserTurn[]
     playTurn:(id:number)=>void
     results:IResults
+    
 }
 
 

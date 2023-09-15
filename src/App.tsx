@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import GameBody from './Components/gameBody/gameBody';
 import Header from "./Components/header/header";
@@ -74,15 +74,18 @@ const arrayOfButtons:IUserTurn[] =[
     isClicked:false,
   }
 ];
-
-
 function App() {
   const [turn,setTurn]=useState<IUserTurn[]>(arrayOfButtons);
   const [clicks,setClicks]=useState<IPlayerClicks>({xClicks:[],oClicks:[]});
-  const [results,setResults]=useState<IResults>({xWinner:0,ties:0,oWinner:0})
+  const [playerTurn,setPlayerTurn]=useState<boolean>(false);
+  const [results,setResults]=useState<IResults>({xWinner:0,ties:0,oWinner:0});
+  const [winner,setWinner]=useState<string>("");
+  const [winnerDeclared,setWinnerDeclared]=useState<boolean>(false);
+  const [start,setStart]=useState(false);
   const playTurn=(id:number):void=>{
     const newArray:IUserTurn[]=turn.map((button:IUserTurn)=>{
       if(button.buttonId===id){
+        setPlayerTurn(!playerTurn);
         return({
           buttonId:button.buttonId,
           isClicked:true,
@@ -92,7 +95,6 @@ function App() {
       }else {
         return button; 
       }
-      
   });
     const newXTurnsArray:number[]=newArray.filter((button)=>button.isClicked && button.xturn).map((button)=>{
       return(button.buttonId);
@@ -102,75 +104,94 @@ function App() {
     });
     const newClicks:IPlayerClicks={xClicks:newXTurnsArray,oClicks:newOTurnsArray};
     setTurn(newArray);
-    setClicks(newClicks);
-    
-    
+    setClicks(newClicks); 
   }
-  
-  const declareWinner=():void=>{
+  useEffect(()=>{
     const winningCombinations = [
-      [1, 2, 3], // Première ligne horizontale
-      [4, 5, 6], // Deuxième ligne horizontale
-      [7, 8, 9], // Troisième ligne horizontale
-      [1, 4, 7], // Première ligne verticale
-      [2, 5, 8], // Deuxième ligne verticale
-      [3, 6, 9], // Troisième ligne verticale
-      [1, 5, 9], // Diagonale de gauche à droite
-      [3, 5, 7], // Diagonale de droite à gauche
+      [1, 2, 3], 
+      [4, 5, 6], 
+      [7, 8, 9],  
+      [1, 4, 7], 
+      [2, 5, 8], 
+      [3, 6, 9], 
+      [1, 5, 9], 
+      [3, 5, 7], 
     ];
-    
+    let newXwinner:number=results.xWinner;
+    let newOwinner:number=results.oWinner;
+    let newTie:number=results.ties;
     winningCombinations.forEach((comb)=>{
       if(comb.every((num)=> clicks.xClicks.includes(num))){
-        const newXwinner=results.xWinner++;
-        const oldTie=results.ties;
-        const oldoWinner=results.oWinner
-        setResults({xWinner:newXwinner,ties:oldTie,oWinner:oldoWinner});
-        console.log(results);
+        newXwinner++;
+        setWinner("X wins");
+        setWinnerDeclared(true);
       }
       else if(comb.every((num)=> clicks.oClicks.includes(num))){
-        const newOwinner=results.oWinner++;
-        const oldTie=results.ties;
-        const oldXWinner=results.xWinner
-        setResults({xWinner:oldXWinner,ties:oldTie,oWinner:newOwinner});
-        console.log(results);
+        newOwinner++;
+        setWinner("O wins");
+        setWinnerDeclared(true);
       }
     })
     if(clicks.xClicks.length===5){
-      const newTie=results.ties++;
-      setResults({xWinner:results.xWinner,ties:newTie,oWinner:results.oWinner});
-      
+      newTie++;
+      setWinner("Tie ");
+      setWinnerDeclared(true);
     }
-  }
+    setResults((prevResults) => ({
+      ...prevResults,
+      xWinner: newXwinner,
+      oWinner: newOwinner,
+      ties: newTie,
+    }));
+  },[clicks]);
 
-  useEffect(()=>{
-    declareWinner();
-  },[clicks])
-  
-  
+useEffect(()=>{
+  console.log(winnerDeclared);
+  if(winnerDeclared){
+    setTurn(arrayOfButtons);
+    
+    setWinnerDeclared(false);
+    setPlayerTurn(false);
+  }
+},[winnerDeclared]);
+const startGame=():void=>{
+  setStart(true);
+} 
+const restartGame=():void=>{
+  setTurn(arrayOfButtons);
+  setWinnerDeclared(false);
+  setPlayerTurn(false);
+  setResults({xWinner:0,ties:0,oWinner:0});
+  setWinner("");
+}
   return (
     
     <div className="App">
-      <Header />
+      <Header playerTurn={playerTurn} restartGame={restartGame} start={start} startGame={startGame} />
+      {start &&
+      <>
       <GameBody turn={turn} playTurn={playTurn} results={results} />
       <div className="footer-grid">
         <div className="results">
           <div className="x">
-                <div>X</div>
+                <div><span className="material-symbols-outlined ">close</span></div>
                 <div>{results.xWinner}</div>
             </div>
             <div className="ties">
-                <div>Ties</div>
+                <div className='tie'>Ties</div>
                 <div>{results.ties}</div>    
             </div>
             <div className="o">
-                <div>O</div>
+                <div><span className="material-symbols-outlined">trip_origin</span></div>
                 <div>{results.oWinner}</div>    
             </div>
             <div className="winner">
-                WINS
+              {winner}
             </div>
         </div>
       </div>
+      </>
+      }
     </div>
       
     
