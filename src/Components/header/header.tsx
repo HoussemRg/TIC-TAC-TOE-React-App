@@ -16,7 +16,7 @@ function Header(props:IHeader) {
             <span className="material-symbols-outlined oSymbole">trip_origin</span>
         </div>
         <div className="turn">
-            {props.start ? props.playerTurn ?<><span className="material-symbols-outlined oSymbole">trip_origin</span><div>Turn</div></> : <><span className="material-symbols-outlined xSymbole">close</span><div>Turn</div></>: <button onClick={props.startGame} className="start">Start Game</button>}
+            {props.start ? props.playerTurn ?<><span className="material-symbols-outlined oSymbole">trip_origin</span><div>Turn</div></> : <><span className="material-symbols-outlined xSymbole">close</span><div>Turn</div></>: <div><button onClick={props.startGame} className="start">Start Game</button></div>}
             
         </div>
         <div >

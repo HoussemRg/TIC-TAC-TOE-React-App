@@ -146,7 +146,7 @@ function App() {
   },[clicks]);
 
 useEffect(()=>{
-  console.log(winnerDeclared);
+  
   if(winnerDeclared){
     setTurn(arrayOfButtons);
     
